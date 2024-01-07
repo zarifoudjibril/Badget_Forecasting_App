@@ -1,0 +1,227 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.2/core.css">
+    <!-- CSS for examples -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2023.11.2/core.js"></script>
+
+    <!-- for splashscreen -->
+    <style>
+        #loading {
+            outline: none;
+            border: none;
+            background: transparent
+        }
+    </style>
+    <script type="module">
+        const loading = document.getElementById('loading');
+        addEventListener('py:ready', () => loading.close());
+        loading.showModal();
+    </script>
+
+    <!-- will be set via PyDom -->
+    <title id="header-title"></title>
+    <link rel="icon" type="image/png" href="./assets/soff-logo_ .svg" />
+</head>
+
+<body>
+
+    <dialog id="loading">
+        <h1>Loading...</h1>
+    </dialog>
+    <div id="message">
+        <img id="logo" src="./assets/soff-logo_ .svg" alt="SOFF Logo">
+        <h1 id="title-text">SOFF BUDGET FORECASTING</h1>
+        <div id="select-button">
+            <div><label for="batches">Chose the Batch:</label>
+                <select id="batches" name="batchess">
+                    <option value="1">1st Batch - 6th SC - Except South Sudan</option>
+                    <option value="2">2nd Batch - 7th SC</option>
+                    <option value="3">3rd Batch - 8th SC</option>
+                    <option value="4">4th Batch - 9th SC</option>
+                    <option value="5">5th Batch - 10th SC</option>
+                    <option value="6">6th Batch - 11th SC</option>
+                    <option value="7">South Sudan Only</option>
+                    <!--<option value="6th Batch - 11th SC">All Batches (1st to 6th)</option>-->
+                </select>
+            </div>
+            <button type="submit" id="btn-load" class="py-button" py-click="loadFromURL">
+                CALCULATE
+            </button>
+
+        </div>
+    </div>
+    </div>
+    <h2 id="note"></h2>
+
+    <div id="resp" class="container" hidden>
+        <section id="mic">
+            <h2>MIC Paper Based</h2>
+            <div id="mic-text">
+                <table>
+                    <tr id="rpc">
+                        <td>Readiness Peer Cost</td>
+                        <td id="rpc-value"></td>
+                    </tr>
+                    <tr id="ipc">
+                        <td>Investment Peer Cost</td>
+                        <td id="ipc-value"></td>
+                    </tr>
+                    <tr id="ic">
+                        <td>Installation Cost</td>
+                        <td id="ic-value"></td>
+                    </tr>
+                    <tr id="aoc">
+                        <td>Additional Output Cost</td>
+                        <td id="aoc-value"></td>
+                    </tr>
+                    <tr id="om">
+                        <td>O & M</td>
+                        <td id="om-value"></td>
+                    </tr>
+                    <tr id="soff">
+                        <td>SOFF Secretariat Cost</td>
+                        <td id="soff-value"></td>
+                    </tr>
+                    <tr id="iec">
+                        <td>Implementing Entity Cost</td>
+                        <td id="iec-value"></td>
+                    </tr>
+                    <tr id="tf">
+                        <td>Trustee Fee</td>
+                        <td id="tf-value"></td>
+                    </tr>
+                    <tr id="total-cost">
+                        <td>Total Cost</td>
+                        <td id="total-cost-value"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </section>
+        <section id="first-batch">
+            <h2>First Batch Based</h2>
+            <div id="first-batch-text">
+                <table>
+                    <tr id="total-cost1">
+                        <td>Total Cost</td>
+                        <td id="total-cost1-value"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </section>
+    </div>
+    <div id="avg" hidden>
+        <p>Comparaision between estimated cost and actual cost</p>
+        <table>
+            <tr id="avg-total-cost">
+                <td>Average Total Cost</td>
+                <td id="avg-total-cost-value"></td>
+            </tr>
+            <tr id="actual-total-cost">
+                <td>Actual Total Cost</td>
+                <td id="actual-total-cost-value"></td>
+            </tr>
+            </tr>
+            <tr id="difference">
+                <td>Difference (minus means predicted amount is less than the actual amount)</td>
+                <td id="difference-value"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div id="finals" hidden>
+        <!-- <button id="final-button" class="py-button">
+            TOTAL COST FOR 3 YEARS
+        </button> -->
+        <table id="final-total">
+            <p>Total readiness and investment cost for the 50 countries </p>
+            <tr id="final-cost-cost-text-mic">
+                <td> Overall Total Cost (Mic paper based)</td>
+                <td id="final-cost-value-mic"></td>
+            </tr>
+            <tr id="final-cost-cost-text-first">
+                <td> Overall Total Cost (First Batch based)</td>
+                <td id="final-cost-value-first"></td>
+            </tr>
+            <tr id="final-cost-cost-text-avg">
+                <td> Overall Total Cost (Average)</td>
+                <td id="final-cost-value-avg"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="grands" hidden>
+        <p>Taking into account the readiness expenses of the countries left in readiness phase ie (61-50) countries </p>
+        <div>
+            <table id="grand-total">
+                <tr id="final-cost-cost-text-mic-gr">
+                    <td> Grand Total (Mic paper based)</td>
+                    <td id="final-cost-value-mic-gr"></td>
+                </tr>
+                <tr id="final-cost-cost-text-first-gr">
+                    <td> Grand Total (First Batch based)</td>
+                    <td id="final-cost-value-first-gr"></td>
+                </tr>
+                <tr id="final-cost-cost-text-avg-gr">
+                    <td> Grand Total (Average)</td>
+                    <td id="final-cost-value-avg-gr"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="future-expenses" hidden>
+        <p>Considering the fact that 50% of the readiness cost of 45 countries is already disbursed incoming expenses
+            expenses are as follow</p>
+        <div>
+            <table id="future-total">
+                <tr id="fcost-mic">
+                    <td> Incoming Expenses (Mic paper based)</td>
+                    <td id="fcost-mic-value"></td>
+                </tr>
+                <tr id="fcost-first">
+                    <td> Incoming Expenses (First Batch based)</td>
+                    <td id="fcost-first-value"></td>
+                </tr>
+                <tr id="fcost-avg">
+                    <td> Incoming Expenses (Average)</td>
+                    <td id="fcost-avg-value"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <p id="title-gbon" hidden>Programmed countries and their GBON Gaps</p>
+    <div id="inputs" hidden>
+
+        <!--The dataframe of the batch comes here-->
+    </div>
+
+
+
+    <section class="pyscript">
+        <script type="py" src="./main.py" config="./pyscript.toml"></script>
+    </section>
+
+    <script src="main.js"></script>
+
+
+    <footer>
+        <p>v.18.01.24</p>
+    </footer>
+</body>
+
+
+</html>
