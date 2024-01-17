@@ -78,6 +78,7 @@ th {
     padding: 8px;
 }
 #mic tr:last-child, 
+#mic tr:first-child, 
 #first-batch tr:last-child{
     background-color: #dddddd;
 }
