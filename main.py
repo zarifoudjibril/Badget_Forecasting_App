@@ -279,16 +279,16 @@ def loadFromURL(event):
     pydom['#final-cost-value-avg'].html = int(avg_final)
 
     # Grand Total
-    gr_mic = mic_final + av_read_cost * (61-s)
-    gr_first = first_final + av_read_cost * (61-s)
+    gr_mic = mic_final + av_read_cost * (61-s+14)
+    gr_first = first_final + av_read_cost * (61-s+14)
     gr_avg = (gr_first + gr_mic)/2
     pydom['#final-cost-value-mic-gr'].html = int(gr_mic)
     pydom['#final-cost-value-first-gr'].html = int(gr_first)
     pydom['#final-cost-value-avg-gr'].html = int(gr_avg)
 
     # Future Expenses
-    f_mic = mic_final + av_read_cost * (61 - s - 45)
-    f_first = first_final + av_read_cost * (61 - s - 45)
+    f_mic = mic_final + av_read_cost * (61 - s - 45+14)
+    f_first = first_final + av_read_cost * (61 - s - 45+14)
     f_avg = (f_first + f_mic)/2
     pydom['#fcost-mic-value'].html = int(f_mic)
     pydom['#fcost-first-value'].html = int(f_first)
