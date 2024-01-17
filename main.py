@@ -100,6 +100,7 @@ def loadFromURL(event):
 
     # TOTAL
     total_cost = rpc + ipc + ic + aoc + om + soff + iec + tf  # total cost
+    total_cost_wr = ipc + ic + aoc + om + soff + iec + tf  # total cost without readiness
 
     pydom["#rpc-value"].html = int(rpc)
     pydom["#ipc-value"].html = int(ipc)
@@ -109,7 +110,7 @@ def loadFromURL(event):
     pydom["#soff-value"].html = int(soff)
     pydom["#iec-value"].html = int(iec)
     pydom["#tf-value"].html = int(tf)
-    pydom["#total-cost-value"].html = int(total_cost)
+    pydom["#total-cost-value"].html = int(total_cost_wr)
 
     # Displaying hidden elements
     pydom["#note"].html = ""
@@ -145,19 +146,21 @@ def loadFromURL(event):
 
     if pydom['select'].value == ['1']:
         total_cost_first = budget_five + av_read_cost * n
+        total_cost_first_wr = budget_five
         # display(n)
     else:
         total_cost_first = (budget_five/5 + av_read_cost) * n
+        total_cost_first_wr = (budget_five/5) * n
         # display(n)
-    pydom["#total-cost1-value"].html = int(total_cost_first)
-    avg = (total_cost+total_cost_first)/2
+    pydom["#total-cost1-value"].html = int(total_cost_first_wr)
+    avg = (total_cost_wr+total_cost_first_wr)/2
     pydom["#avg-total-cost-value"].html = int(avg)
 
     if pydom['select'].value == ['1']:
-        pydom['#actual-total-cost-value'].html = total_cost_first
-        pydom['#difference-value'].html = int(avg - total_cost_first)
-        total_cost_first = budget_five + av_read_cost * n
-        if avg > total_cost_first:
+        pydom['#actual-total-cost-value'].html = total_cost_first_wr
+        pydom['#difference-value'].html = int(avg - total_cost_first_wr)
+        total_cost_first_wr = budget_five
+        if avg > total_cost_first_wr:
             pydom['#avg tr:nth-last-child(1)'].style["background-color"] = '#018c85'
         else:
             pydom['#avg tr:nth-last-child(1)'].style["background-color"] = '#D9654C'
@@ -271,8 +274,8 @@ def loadFromURL(event):
     pydom['#final-cost-value-avg-gr'].html = int(gr_avg)
 
     # Future Expenses
-    f_mic = mic_final + av_read_cost * (61 - s - (45/2))
-    f_first = first_final + av_read_cost * (61 - s - (45/2))
+    f_mic = mic_final + av_read_cost * (61 - s - 45)
+    f_first = first_final + av_read_cost * (61 - s - 45)
     f_avg = (f_first + f_mic)/2
     pydom['#fcost-mic-value'].html = int(f_mic)
     pydom['#fcost-first-value'].html = int(f_first)
