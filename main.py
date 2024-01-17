@@ -43,6 +43,7 @@ def loadFromURL(event):
                                                                                        'South Sudan']
 
         display(df_selected, target="#inputs", append=False)
+        
     # First Batch except South Sudan
     elif pydom['select'].value == ['1']:
         n = df['Country'][df['Investment Phase'] ==
@@ -80,7 +81,13 @@ def loadFromURL(event):
                                                                                        int(pydom['select'].value[0])]
         
         display(df_selected, target="#inputs", append=False)
-       
+        
+        pydom["#inputs_surface_total"].html = df[['Gap(total)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["#inputs_surface_improve"].html = df[['Gap(improve)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["inputs_surface_new"].html = df[['Gap(new)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["#inputs_upper_total"].html = df[['Gap(total)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["inputs_upper_improve"].html = df[['Gap(improve)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["inputs_upper_new"].html = df[['Gap(new)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
 
 # Mic
 
@@ -111,6 +118,8 @@ def loadFromURL(event):
     pydom["#iec-value"].html = int(iec)
     pydom["#tf-value"].html = int(tf)
     pydom["#total-cost-value"].html = int(total_cost_wr)
+    
+  
 
     # Displaying hidden elements
     pydom["#note"].html = ""
@@ -121,6 +130,7 @@ def loadFromURL(event):
     pydom["#future-expenses"].style["display"] = "block"
     pydom['#inputs'].style["display"] = "block"
     pydom["#title-gbon"].style["display"] = "block"
+    pydom["#gbon"].style["display"] = "flex"
 
     # Header Message
     if pydom['select'].value[0] == "1":
