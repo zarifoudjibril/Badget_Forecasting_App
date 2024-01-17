@@ -43,7 +43,6 @@ def loadFromURL(event):
                                                                                        'South Sudan']
 
         display(df_selected, target="#inputs", append=False)
-        
     # First Batch except South Sudan
     elif pydom['select'].value == ['1']:
         n = df['Country'][df['Investment Phase'] ==
@@ -63,6 +62,12 @@ def loadFromURL(event):
         
 
         display(df_selected, target="#inputs", append=False)
+        pydom["#inputs_surface_total"].html = f"Total Surface Gap (total): {df['Gap(total)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-16}"
+        pydom["#inputs_surface_improve"].html = f"Total Surface Gap(improve): {df['Gap(improve)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-2}"
+        pydom["#inputs_surface_new"].html = f"Total Surface Gap(new): {df['Gap(new)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-14}"
+        pydom["#inputs_upper_total"].html = f"Total Upper-air Gap (total): {df['Gap(total)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-3}"
+        pydom["#inputs_upper_improve"].html = f"Total Upper-air Gap (improve): {df['Gap(improve)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-0}"
+        pydom["#inputs_upper_new"].html = f"Total Upper-air Gap (new): {df['Gap(new)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-3}"
         
         # print(n, si, sn, ui, un)
     else:
@@ -81,13 +86,13 @@ def loadFromURL(event):
                                                                                        int(pydom['select'].value[0])]
         
         display(df_selected, target="#inputs", append=False)
-        
-        pydom["#inputs_surface_total"].html = df[['Gap(total)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
-        pydom["#inputs_surface_improve"].html = df[['Gap(improve)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
-        pydom["inputs_surface_new"].html = df[['Gap(new)']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
-        pydom["#inputs_upper_total"].html = df[['Gap(total)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
-        pydom["inputs_upper_improve"].html = df[['Gap(improve)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
-        pydom["inputs_upper_new"].html = df[['Gap(new)_u']][df['Investment Phase'] == int(pydom['select'].value[0])].sum()
+        pydom["#inputs_surface_total"].html = f"Total Surface Gap (total): {df['Gap(total)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+        pydom["#inputs_surface_improve"].html = f"Total Surface Gap(improve): {df['Gap(improve)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+        pydom["#inputs_surface_new"].html = f"Total Surface Gap(new): {df['Gap(new)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+        pydom["#inputs_upper_total"].html = f"Total Upper-air Gap (total): {df['Gap(total)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+        pydom["#inputs_upper_improve"].html = f"Total Upper-air Gap (improve): {df['Gap(improve)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+        pydom["#inputs_upper_new"].html = f"Total Upper-air Gap (new): {df['Gap(new)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
+       
 
 # Mic
 
@@ -118,8 +123,6 @@ def loadFromURL(event):
     pydom["#iec-value"].html = int(iec)
     pydom["#tf-value"].html = int(tf)
     pydom["#total-cost-value"].html = int(total_cost_wr)
-    
-  
 
     # Displaying hidden elements
     pydom["#note"].html = ""
