@@ -39,7 +39,7 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Country'] ==
                               'South Sudan'].sum()
         df_selected = df[['Country',
-                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][df['Country'] ==
+                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][df['Country'] ==
                                                                                        'South Sudan']
 
         display(df_selected, target="#inputs", append=False)
@@ -56,11 +56,13 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Investment Phase'] ==
                               int(pydom['select'].value[0])].sum()-3
         df_selected = df[['Country',
-                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][(df['Investment Phase'] ==
+                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][(df['Investment Phase'] ==
                                                                                        int(pydom['select'].value[0])) & (df['Country'] !=
                                                                                                                          'South Sudan')]
+        
 
         display(df_selected, target="#inputs", append=False)
+        
         # print(n, si, sn, ui, un)
     else:
         n = df['Country'][df['Investment Phase'] ==
@@ -74,11 +76,11 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Investment Phase'] ==
                               int(pydom['select'].value[0])].sum()
         df_selected = df[['Country',
-                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][df['Investment Phase'] ==
+                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][df['Investment Phase'] ==
                                                                                        int(pydom['select'].value[0])]
-
+        
         display(df_selected, target="#inputs", append=False)
-
+       
 
 # Mic
 
