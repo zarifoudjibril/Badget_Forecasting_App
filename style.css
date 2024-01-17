@@ -78,7 +78,6 @@ th {
     padding: 8px;
 }
 #mic tr:last-child, 
-#mic tr:first-child, 
 #first-batch tr:last-child{
     background-color: #dddddd;
 }
@@ -132,4 +131,18 @@ table{
 #footer {
     text-align: center;
     
+}
+
+#gbon {
+    display: block;
+    flex-wrap: nowrap;
+}
+
+#gbon > div {
+    background-color: #dddddd;
+    width: 16.66%;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
 }
