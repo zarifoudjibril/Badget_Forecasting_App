@@ -109,13 +109,10 @@ def click_handler(event):
         " Budget Estimation (USD)"
 
 
-# First Batch
-    total_cost_first_wr_c = budget_five_c/5
+# Actual based on First Batch
+    total_cost_first_wr_c = (total_cost_wr_c + 369786.42690992)/0.82842479
     # display(n)
     pydom["#total-cost1-value-c"].html = int(total_cost_first_wr_c)
-# Average
-    avg_c = (total_cost_wr_c+total_cost_first_wr_c)/2
-    pydom["#avg-total-cost-value-c"].html = int(avg_c)
 
 
 # Actuals
@@ -125,8 +122,8 @@ def click_handler(event):
         pydom["#difference-value-c"].html = " "
     else:
         pydom["#actual-total-cost-value-c"].html = budget_act
-        pydom["#difference-value-c"].html = int(total_cost_wr_c - budget_act)
-        if total_cost_wr_c > budget_act:
+        pydom["#difference-value-c"].html = int(total_cost_first_wr_c- budget_act) 
+        if total_cost_first_wr_c > budget_act:
             pydom['#avg-c tr:nth-last-child(1)'].style["background-color"] = '#018c85'
             pydom['#avg-c tr:nth-last-child(1)'].style["color"] = '#ffffff'
         else:
