@@ -24,10 +24,12 @@ budget_five = budget_six - 2168056  # (South Sudan budget)
 
 
 def loadFromURL(event):
+    pydom['body'].style['grid-template-rows'] = '1fr auto'
+    pydom['#main-container'].style['border-top'] = '150px'
     # geting values from select
 
     # South Sudan Case
-    if pydom['select'].value == ['7']:
+    if pydom['select'].value[0] == '7':
         n = df['Country'][df['Country'] ==
                           'South Sudan'].count()
         si = df['Gap(improve)'][df['Country']
@@ -39,12 +41,12 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Country'] ==
                               'South Sudan'].sum()
         df_selected = df[['Country',
-                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][df['Country'] ==
+                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][df['Country'] ==
                                                                                        'South Sudan']
 
         display(df_selected, target="#inputs", append=False)
     # First Batch except South Sudan
-    elif pydom['select'].value == ['1']:
+    elif pydom['select'].value[0] == '1':
         n = df['Country'][df['Investment Phase'] ==
                           int(pydom['select'].value[0])].count() - 1
         si = df['Gap(improve)'][df['Investment Phase']
@@ -56,10 +58,9 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Investment Phase'] ==
                               int(pydom['select'].value[0])].sum()-3
         df_selected = df[['Country',
-                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][(df['Investment Phase'] ==
-                                                                                       int(pydom['select'].value[0])) & (df['Country'] !=
-                                                                                                                         'South Sudan')]
-        
+                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][(df['Investment Phase'] ==
+                                                                                        int(pydom['select'].value[0])) & (df['Country'] !=
+                                                                                                                          'South Sudan')]
 
         display(df_selected, target="#inputs", append=False)
         pydom["#inputs_surface_total"].html = f"Total Surface Gap (total): {df['Gap(total)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-16}"
@@ -68,7 +69,7 @@ def loadFromURL(event):
         pydom["#inputs_upper_total"].html = f"Total Upper-air Gap (total): {df['Gap(total)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-3}"
         pydom["#inputs_upper_improve"].html = f"Total Upper-air Gap (improve): {df['Gap(improve)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-0}"
         pydom["#inputs_upper_new"].html = f"Total Upper-air Gap (new): {df['Gap(new)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()-3}"
-        
+
         # print(n, si, sn, ui, un)
     else:
         n = df['Country'][df['Investment Phase'] ==
@@ -82,9 +83,9 @@ def loadFromURL(event):
         un = df['Gap(new)_u'][df['Investment Phase'] ==
                               int(pydom['select'].value[0])].sum()
         df_selected = df[['Country',
-                          'Gap(total)', 'Gap(improve)', 'Gap(new)', 'Gap(total)_u','Gap(improve)_u', 'Gap(new)_u']][df['Investment Phase'] ==
+                          'Gap(improve)', 'Gap(new)', 'Gap(improve)_u', 'Gap(new)_u']][df['Investment Phase'] ==
                                                                                        int(pydom['select'].value[0])]
-        
+
         display(df_selected, target="#inputs", append=False)
         pydom["#inputs_surface_total"].html = f"Total Surface Gap (total): {df['Gap(total)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
         pydom["#inputs_surface_improve"].html = f"Total Surface Gap(improve): {df['Gap(improve)'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
@@ -92,7 +93,7 @@ def loadFromURL(event):
         pydom["#inputs_upper_total"].html = f"Total Upper-air Gap (total): {df['Gap(total)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
         pydom["#inputs_upper_improve"].html = f"Total Upper-air Gap (improve): {df['Gap(improve)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
         pydom["#inputs_upper_new"].html = f"Total Upper-air Gap (new): {df['Gap(new)_u'][df['Investment Phase'] == int(pydom['select'].value[0])].sum()}"
-       
+
 
 # Mic
 
@@ -112,7 +113,8 @@ def loadFromURL(event):
 
     # TOTAL
     total_cost = rpc + ipc + ic + aoc + om + soff + iec + tf  # total cost
-    total_cost_wr = ipc + ic + aoc + om + soff + iec + tf  # total cost without readiness
+    total_cost_wr = ipc + ic + aoc + om + soff + \
+        iec + tf  # total cost without readiness
 
     pydom["#rpc-value"].html = int(rpc)
     pydom["#ipc-value"].html = int(ipc)
@@ -134,6 +136,7 @@ def loadFromURL(event):
     pydom['#inputs'].style["display"] = "block"
     pydom["#title-gbon"].style["display"] = "block"
     pydom["#gbon"].style["display"] = "flex"
+    pydom["#per-batch"].style["padding"] = "10px"
 
     # Header Message
     if pydom['select'].value[0] == "1":
@@ -157,27 +160,28 @@ def loadFromURL(event):
 
     # total cost
 
-    if pydom['select'].value == ['1']:
-        total_cost_first = budget_five + av_read_cost * n
+    if pydom['select'].value[0] == '1':
+        # total_cost_first = budget_five + av_read_cost * n
         total_cost_first_wr = budget_five
-        # display(n)
-    else:
-        total_cost_first = (budget_five/5 + av_read_cost) * n
-        total_cost_first_wr = (budget_five/5) * n
-        # display(n)
-    pydom["#total-cost1-value"].html = int(total_cost_first_wr)
-    avg = (total_cost_wr+total_cost_first_wr)/2
-    pydom["#avg-total-cost-value"].html = int(avg)
-
-    if pydom['select'].value == ['1']:
-        pydom['#actual-total-cost-value'].html = total_cost_first_wr
+        pydom["#total-cost1-value"].html = int(total_cost_first_wr)
+        avg = (total_cost_wr+total_cost_first_wr)/2
+        pydom["#avg-total-cost-value"].html = int(avg)
+        # actuals
+        pydom['#actual-total-cost-value'].html = int(total_cost_first_wr)
         pydom['#difference-value'].html = int(avg - total_cost_first_wr)
         total_cost_first_wr = budget_five
-        if avg > total_cost_first_wr:
+        if avg > int(total_cost_first_wr):
             pydom['#avg tr:nth-last-child(1)'].style["background-color"] = '#018c85'
+            pydom['#avg tr:nth-last-child(1)'].style["color"] = '#ffffff'
         else:
             pydom['#avg tr:nth-last-child(1)'].style["background-color"] = '#D9654C'
+            pydom['#avg tr:nth-last-child(1)'].style["color"] = '#ffffff'
     else:
+        # total_cost_first = (budget_five/5 + av_read_cost) * n
+        total_cost_first_wr = (budget_five/5) * n
+        pydom["#total-cost1-value"].html = int(total_cost_first_wr)
+        avg = (total_cost_wr+total_cost_first_wr)/2
+        pydom["#avg-total-cost-value"].html = int(avg)
         pydom['#actual-total-cost-value'].html = ""
         pydom['#difference-value'].html = ""
 
