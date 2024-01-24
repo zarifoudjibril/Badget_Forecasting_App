@@ -8,16 +8,32 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
-        display: grid;
-        grid-template-rows: 1fr auto;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
     
 }
+
+#main-container {
+    
+    display: flex;
+    flex-wrap: nowrap;
+    /*align-items: flex-start;*/
+}
+#main-container > div {
+    width: 50%;
+    margin: 10px;
+    text-align: center;
+    /*background-color: #;*/
+    text-align: center;
+    
+}
+
 
 #message {
 text-align: center;
 }
 
-#note{
+#note, #note-c{
   color: var(--soff-green);
   text-align: center;
 }
@@ -25,17 +41,18 @@ text-align: center;
 #logo {
     width: 300px;
 }
-#resp {
+
+#resp, #resp-c {
     /* margin-top: 10px; */
     /*display: flex;*/
     flex-wrap: nowrap;
     background-color: var(--soff-first);
 }
 
-#mic, #first-batch {
+#mic, #mic-c, #first-batch, #first-batch-c {
     background-color: #ffffff;
     padding: 2px 10px;
-    margin: 0px 1px 0px 1px;
+    margin: 0px 0px 0px 0px;
     width: 50%;
 }
 
@@ -78,22 +95,11 @@ th {
     padding: 8px;
 }
 #mic tr:last-child, 
-#mic tr:first-child, 
 #first-batch tr:last-child{
     background-color: #dddddd;
 }
 
-#avg tr:nth-last-child(1){
-    color:#ffffff ;
-}
-#avg tr {
-    background-color: #dddddd;
-    
-}
-#avg tr:nth-last-child(2) {
-    background-color: #dddddd;
-    
-}
+
 
 #final-total tr:nth-last-child(1), 
 #grand-total tr:nth-last-child(1),
@@ -134,16 +140,14 @@ table{
     
 }
 
-#gbon {
-    display: block;
-    flex-wrap: nowrap;
-}
+
 
 #gbon > div {
     background-color: #dddddd;
-    width: 16.66%;
-    margin: 10px;
+    width: 20%;
+    margin: 5px;
     text-align: center;
-    line-height: 75px;
-    font-size: 30px;
+    line-height: 20px;
+    font-size: 15px;
+    padding: 5px;
 }
